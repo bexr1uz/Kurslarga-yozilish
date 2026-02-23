@@ -83,18 +83,3 @@ button:hover {
   cursor: pointer;
   transition: background-color 0.2s;
 }
-.action-btns button:hover {
-  background-color: #555;
-}
-.action-btns .edit-btn {
-  background-color: #f6ad55;
-}
-.action-btns .edit-btn:hover {
-  background-color: #dd8844;
-}
-.action-btns .delete-btn {
-  background-color: #e53e3e;
-}
-.action-btns .delete-btn:hover {
-  background-color: #b32a2a;
-}
