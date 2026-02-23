@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<title>Ro'yxatdan O'tish</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="box">
+  <h2>Ro'yxatdan O'tish</h2>
+
+  <input type="text" id="ism" placeholder="Ism" />
+  <input type="text" id="familya" placeholder="Familya" />
+
+  <select id="kun">
+    <option value="">Kunni tanlang</option>
+    <option>Toq</option>
+    <option>Juft</option>
+  </select>
+
+  <select id="fan">
+    <option value="">Fan tanlang</option>
+    <option value="mat">Matematika</option>
+    <option value="eng">Ingliz tili</option>
+    <option value="fiz">Fizika</option>
+    <option value="it">IT</option>
+  </select>
+
+  <button onclick="qoshish()">Qo'shish</button>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h3>Matematika</h3>
+    <div id="mat"></div>
+  </div>
+
+  <div class="card">
+    <h3>Ingliz tili</h3>
+    <div id="eng"></div>
+  </div>
+
+  <div class="card">
+    <h3>Fizika</h3>
+    <div id="fiz"></div>
+  </div>
+
+  <div class="card">
+    <h3>IT</h3>
+    <div id="it"></div>
+  </div>
+</div>
+
+<script src="app.js">
+</script>
+
+</body>
+</html>
