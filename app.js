@@ -49,14 +49,12 @@ function render(){
     </div>
     `;
 
-    // DELETE
     div.querySelector(".delete-btn").addEventListener("click",()=>{
       data.splice(index,1);
       saveData(data);
       render();
     });
 
-    // EDIT
     div.querySelector(".edit-btn").addEventListener("click",()=>{
       document.getElementById("fullname").value=item.fullname;
       document.getElementById("telefon").value=item.telefon;
@@ -116,5 +114,5 @@ document.querySelectorAll("input,select").forEach(el=>el.value="");
 
 });
 
-// Sahifa ochilganda
+
 render();
