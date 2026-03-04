@@ -125,10 +125,6 @@ button{
   transition:0.2s;
 }
 
-.edit-btn{
-  background:#f6ad55;
-  cursor:not-allowed;
-}
 
 .delete-btn{
   background:#e53e3e;
