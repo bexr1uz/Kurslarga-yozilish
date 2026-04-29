@@ -1,11 +1,19 @@
-let editIndex = null;
+let editIndex=null;
 
-function yoshHisobla(tugilgan){
-  const tugilganDate=new Date(tugilgan);
-  const bugun=new Date();
-  let yosh=bugun.getFullYear()-tugilganDate.getFullYear();
-  const oy=bugun.getMonth()-tugilganDate.getMonth();
-  if(oy<0||(oy===0&&bugun.getDate()<tugilganDate.getDate())){
+function onlyNumbers(input){
+  input.value=input.value.replace(/[^0-9]/g,'');
+}
+
+function onlyLetters(input){
+  input.value=input.value.replace(/[^a-zA-Z\s]/g,'');
+}
+
+function yoshHisobla(date){
+  const d=new Date(date);
+  const now=new Date();
+  let yosh=now.getFullYear()-d.getFullYear();
+  if(now.getMonth()<d.getMonth() || 
+    (now.getMonth()==d.getMonth() && now.getDate()<d.getDate())){
     yosh--;
   }
   return yosh;
@@ -16,7 +24,7 @@ function getData(){
 }
 
 function saveData(data){
-  localStorage.setItem("students", JSON.stringify(data));
+  localStorage.setItem("students",JSON.stringify(data));
 }
 
 function render(){
@@ -26,10 +34,6 @@ function render(){
 
   data.forEach((item,index)=>{
     const yosh=yoshHisobla(item.tugilgan);
-    const tugilganDate=new Date(item.tugilgan);
-    const formatted=("0"+tugilganDate.getDate()).slice(-2)+"."+
-    ("0"+(tugilganDate.getMonth()+1)).slice(-2)+"."+
-    tugilganDate.getFullYear();
 
     const div=document.createElement("div");
     div.className="row";
@@ -38,48 +42,48 @@ function render(){
     <div class="col">${item.fullname}</div>
     <div class="col">${item.telefon}</div>
     <div class="col">${item.jins}</div>
-    <div class="col yosh">${yosh}</div>
-    <div class="col">${formatted}</div>
-    <div class="col kunva">${item.kun}</div>
-    <div class="col kunva">${item.vaqt}</div>
-    <div class="col fan">${item.fan}</div>
-    <div class="col amallar">
+    <div class="col">${yosh}</div>
+    <div class="col">${item.tugilgan}</div>
+    <div class="col">${item.kun}</div>
+    <div class="col">${item.vaqt}</div>
+    <div class="col">${item.fan}</div>
+    <div class="col">
       <button class="action-btn edit-btn">Edit</button>
       <button class="action-btn delete-btn">X</button>
     </div>
     `;
 
-    div.querySelector(".delete-btn").addEventListener("click",()=>{
+    div.querySelector(".delete-btn").onclick=()=>{
       data.splice(index,1);
       saveData(data);
       render();
-    });
+    };
 
-    div.querySelector(".edit-btn").addEventListener("click",()=>{
+    div.querySelector(".edit-btn").onclick=()=>{
       document.getElementById("fullname").value=item.fullname;
       document.getElementById("telefon").value=item.telefon;
       document.getElementById("jins").value=item.jins;
       document.getElementById("tugilgan").value=item.tugilgan;
       document.getElementById("kun").value=item.kun;
-      document.getElementById("ertalabpeshin").value=item.vaqt;
+      document.getElementById("vaqt").value=item.vaqt;
       document.getElementById("fan").value=item.fan;
 
       editIndex=index;
       document.getElementById("addBtn").innerText="Saqlash";
-    });
+    };
 
     list.appendChild(div);
   });
 }
 
-document.getElementById("addBtn").addEventListener("click",function(){
+document.getElementById("addBtn").onclick=function(){
 
 const fullname=document.getElementById("fullname").value.trim();
 const telefon=document.getElementById("telefon").value.trim();
 const jins=document.getElementById("jins").value;
 const tugilgan=document.getElementById("tugilgan").value;
 const kun=document.getElementById("kun").value;
-const vaqt=document.getElementById("ertalabpeshin").value;
+const vaqt=document.getElementById("vaqt").value;
 const fan=document.getElementById("fan").value;
 
 if(!fullname||!telefon||!jins||!tugilgan||!kun||!vaqt||!fan){
@@ -87,22 +91,24 @@ if(!fullname||!telefon||!jins||!tugilgan||!kun||!vaqt||!fan){
   return;
 }
 
+if(!/^[a-zA-Z\s]+$/.test(fullname)){
+  alert("F.I.Sh faqat harflardan iborat!");
+  return;
+}
+
+if(!/^[0-9]+$/.test(telefon)){
+  alert("Telefon faqat raqam!");
+  return;
+}
+
 let data=getData();
 
-const newObj={
-  fullname,
-  telefon,
-  jins,
-  tugilgan,
-  kun,
-  vaqt,
-  fan
-};
+const obj={fullname,telefon,jins,tugilgan,kun,vaqt,fan};
 
 if(editIndex===null){
-  data.push(newObj);
+  data.push(obj);
 }else{
-  data[editIndex]=newObj;
+  data[editIndex]=obj;
   editIndex=null;
   document.getElementById("addBtn").innerText="Qo'shish";
 }
@@ -110,9 +116,8 @@ if(editIndex===null){
 saveData(data);
 render();
 
+// tozalash
 document.querySelectorAll("input,select").forEach(el=>el.value="");
-
-});
-
+};
 
 render();
